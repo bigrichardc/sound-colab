@@ -1,0 +1,135 @@
+<html></html>
+<head>
+  Zeu
+</head>
+<body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/zeu"></script>
+  <canvas id="network-graph" width="600" height="600"></canvas>
+  <script>
+    var options = {
+      // An array of nodes.
+      nodes: [
+        {
+          id: "node-a",
+          x: 30,
+          y: 50,
+          color: "#FF0000",
+          size: 5,
+          text: {
+            value: "Boom server",
+            color: "#007bfb",
+            font: "16px Arial",
+            xOffset: 0,
+            yOffset: -20,
+          },
+          neighbors: [
+            {
+              id: "node-b",
+              edge: {
+                width: 2,
+                color: "#007bfb",
+                dash: [2, 4],
+              },
+            },
+          ],
+        },
+        {
+          id: "node-b",
+          x: 130,
+          y: 100,
+          color: "#FF0000",
+          size: 5,
+          text: {
+            value: "Node B",
+            color: "#007bfb",
+            font: "16px Arial",
+            xOffset: 0,
+            yOffset: -20,
+          },
+        },
+      ],
+    };
+
+    /* Constructor */
+    var networkGraph = new zeu.NetworkGraph("network-graph", options);
+
+    networkGraph.addNodes([
+      {
+        id: "node-c",
+        x: 30,
+        y: 200,
+        color: "#00FF00",
+        size: 5,
+        text: {
+          value: "Added node",
+          color: "#007bfb",
+          font: "16px Arial",
+          xOffset: 0,
+          yOffset: -20,
+        },
+      },
+    ]);
+
+    /*setInterval(function () {
+      for (var i = 0; i < 5; i++) {
+        networkGraph.signal({
+          id: "a",
+          // Source node id.
+          from: "node-c",
+          // Destination node id.
+          to: "node-a",
+          // Signal color.
+          color: "#007bfb",
+          // Duration.
+          duration: 10000,
+          // Signal radius.
+          size: 3,
+        });
+      }
+    }, 300); */
+
+    var socket = io();
+    var socketId = null;
+
+    socket.on("connect", () => {
+      socketId = socket.id;
+      socket.emit("Zeu connected", socketId);
+    });
+
+    socket.on("Client event", (msg) => {
+      console.log(msg);
+      networkGraph.signal({
+        id: "a",
+        // Source node id.
+        from: "node-c",
+        // Destination node id.
+        to: "node-a",
+        // Signal color.
+        color: "#007bfb",
+        // Duration.
+        duration: 10000,
+        // Signal radius.
+        size: 3,
+      });
+
+      setTimeout(() => {
+        networkGraph.signal({
+          id: "a",
+          // Source node id.
+          from: "node-a",
+          // Destination node id.
+          to: "node-b",
+          // Signal color.
+          color: "#007bfb",
+          // Duration.
+          duration: 10000,
+          // Signal radius.
+          size: 3,
+        });
+      }, 1000);
+    });
+
+    console.log(networkGraph);
+  </script>
+</body>

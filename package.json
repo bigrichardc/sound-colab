@@ -1,0 +1,28 @@
+{
+  "name": "sound-colab",
+  "version": "1.0.0",
+  "description": "Using socket.io in collaborative music",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigrichardc/sound-colab.git"
+  },
+  "keywords": [
+    "music",
+    "socket.io"
+  ],
+  "author": "Richard C",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bigrichardc/sound-colab/issues"
+  },
+  "homepage": "https://github.com/bigrichardc/sound-colab#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.0.0"
+  }
+}
