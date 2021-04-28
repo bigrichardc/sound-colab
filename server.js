@@ -3,7 +3,7 @@ const app = express();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const PORT_NUMBER = 3000;
-
+const SERVER_ADDRESS_IP = "0.0.0.0"; //change as necessary
 const colours = require("colors");
 
 colours.setTheme({
@@ -37,7 +37,7 @@ io.on("connection", (socket) => {
 });
 
 io.on("connection", (socket) => {
-  socket.on("boombox connected", (boomBoxkSocketId) => {
+  socket.on("Boombox connected", (boomBoxkSocketId) => {
     BOOMBOX_SOCKET_ID = boomBoxkSocketId;
     console.log(("Booombox connecting on: " + boomBoxkSocketId).boombox);
   });
@@ -65,8 +65,11 @@ io.on("connection", (socket) => {
 io.on("connection", (socket) => {
   socket.on("Button pressed", (clientSocketId, button) => {
     console.log((clientSocketId + " triggered button " + button).client);
-    io.to(BOOMBOX_SOCKET_ID).emit("Client event", "I'm booming");
-    io.to(ZEU_SOCKET_ID).emit("Client event", "I'm booming");
+
+    console.log(("Queue sound on boombox " + BOOMBOX_SOCKET_ID).boombox);
+    io.to(BOOMBOX_SOCKET_ID).emit("Boombox queue", "Queue Sound", button);
+    console.log("Fire signal event on Zeu".zeu);
+    io.to(ZEU_SOCKET_ID).emit("Zeu fire", clientSocketId);
   });
 });
 
@@ -94,6 +97,6 @@ io.on("connection", (socket) => {
   });
 });
 
-http.listen(PORT_NUMBER, "" || "localhost", () => {
+http.listen(PORT_NUMBER, SERVER_ADDRESS_IP || "localhost", () => {
   console.log("listening on *:3000");
 });

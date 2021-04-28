@@ -97,7 +97,7 @@
       socket.emit("Zeu connected", socketId);
     });
 
-    socket.on("Client event", (msg) => {
+    socket.on("Zeu fire", (msg) => {
       console.log(msg);
       networkGraph.signal({
         id: "a",
